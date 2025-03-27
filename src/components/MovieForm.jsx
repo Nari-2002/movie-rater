@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import API from '../services/api-service'
+import { useCookies } from 'react-cookie';
 
 function MovieForm({ movie, updateMovie, addNewMovie }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [token]=useCookies('mr-token')
 
   useEffect(() => {
     setTitle(movie?.title || '');
@@ -12,7 +14,7 @@ function MovieForm({ movie, updateMovie, addNewMovie }) {
 
   // Save existing movie
   const saveMovie = async () => {
-    const resp = await API.updateMovie(movie.id, { title, description });
+    const resp = await API.updateMovie(movie.id, { title, description },token["mr-token"]);
     if (resp) {
       updateMovie(resp);
     }
@@ -20,7 +22,7 @@ function MovieForm({ movie, updateMovie, addNewMovie }) {
 
   // Create new movie
   const createMovie = async () => {
-    const response = await API.createMovie({ title, description });
+    const response = await API.createMovie({ title, description },token["mr-token"]);
     if (response) {
       addNewMovie(response);
     }

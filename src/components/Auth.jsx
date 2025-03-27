@@ -1,18 +1,23 @@
 import React, { useState,useContext,useEffect } from "react";
 import API from "../services/api-service";
-import { TokenContext } from "../index.js";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
     const [username,setUserName]=useState('');
     const [password,setPassword]=useState('');
-    const {token,setToken}=useContext(TokenContext);
+    const [token,setToken]=useCookies("mr-token");
+    const navigate=useNavigate();
     useEffect(()=>{
-        console.log(token)
+        console.log(token["mr-token"])
+        if(token["mr-token"]){
+            navigate('/movies')
+        }
     },[token])
     const loginUser=()=>{
         const getToken=async()=>{
             const resp=await API.loginUser({username,password})
-            if(resp) setToken(resp.token)
+            if(resp) setToken("mr-token",resp.token)
         }
         getToken()
     }

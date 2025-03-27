@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import './App.css';
 import MovieList from './components/MovieList';
 import MovieDetails from './components/MovieDetails';
 import MovieForm from './components/MovieForm';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 
 function App() {
@@ -10,6 +12,14 @@ function App() {
   const [editedMovie, setEditedMovie] = useState(null);
   const [updatedMovie, setUpdatedMovie] = useState(null);
   const [newMovie, setNewMovie] = useState(null);
+  const [token]=useCookies("mr-token")
+  const navigate=useNavigate();
+   useEffect(()=>{
+          console.log(token["mr-token"])
+          if(!token["mr-token"]){
+              navigate('/')
+          }
+      },[token])
 
   const movieClicked = (movie, isEdit) => {
     if (isEdit) {

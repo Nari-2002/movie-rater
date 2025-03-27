@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import API from '../services/api-service';
+import { useCookies } from 'react-cookie';
 
 function MovieDetails({ movie, updateMovie }) {
     const [highlighted, setHighlighted] = useState(-1);
     const [error, setError] = useState(null);
+    const [token]=useCookies("mr-token")
 
     if (!movie) return <h1>Select a movie to view details</h1>;
 
     const rateMovie = async (rate) => {
         try {
-            const response = await API.rateMovie(movie.id, { stars: rate });
+            const response = await API.rateMovie(movie.id, { stars: rate },token["mr-token"]);
 
             if (response) {
                 fetchUpdatedMovie();
@@ -22,7 +24,7 @@ function MovieDetails({ movie, updateMovie }) {
 
     const fetchUpdatedMovie = async () => {
         try {
-            const response = await API.getMovie(movie.id);
+            const response = await API.getMovie(movie.id,token["mr-token"]);
 
             if (response) {
                 updateMovie(response);

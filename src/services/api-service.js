@@ -1,5 +1,4 @@
 const API_URL = 'http://127.0.0.1:8000';
-const API_TOKEN = 'f0c7456a04cbadc07c1625a8935dc7984fce4804';
 
 export default class API {
     static async loginUser(body) {
@@ -18,12 +17,12 @@ export default class API {
 
         return await response.json();
     }
-    static async fetchMovies() {
+    static async fetchMovies(token) {
         const response = await fetch(`${API_URL}/api/movies/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Token ${API_TOKEN}`
+                "Authorization": `Token ${token}`
             }
         });
 
@@ -35,12 +34,12 @@ export default class API {
 
         return await response.json();
     }
-    static async rateMovie(movie_id,body) {
+    static async rateMovie(movie_id,body,token) {
         const response = await fetch(`${API_URL}/api/movies/${movie_id}/rate_movie/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Token ${API_TOKEN}`
+                "Authorization": `Token ${token}`
             },body: JSON.stringify(body)
         });
 
@@ -52,12 +51,12 @@ export default class API {
 
         return await response.json();
     }
-    static async getMovie(movie_id) {
+    static async getMovie(movie_id,token) {
         const response = await fetch(`${API_URL}/api/movies/${movie_id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Token ${API_TOKEN}`
+                "Authorization": `Token ${token}`
             }
         });
 
@@ -69,12 +68,12 @@ export default class API {
 
         return await response.json();
     }
-    static async updateMovie(movie_id, body) {
+    static async updateMovie(movie_id, body,token) {
         const response = await fetch(`${API_URL}/api/movies/${movie_id}/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Token ${API_TOKEN}`
+                "Authorization": `Token ${token}`
             },
             body: JSON.stringify(body)
         });
@@ -88,12 +87,12 @@ export default class API {
         return await response.json();
     }
 
-    static async createMovie(body) {  // Removed movie_id from parameters
+    static async createMovie(body,token) {  // Removed movie_id from parameters
         const response = await fetch(`${API_URL}/api/movies/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Token ${API_TOKEN}`
+                "Authorization": `Token ${token}`
             },
             body: JSON.stringify(body)
         });
@@ -106,12 +105,12 @@ export default class API {
 
         return await response.json();
     }
-    static async removeMovie(movie_id) {  
+    static async removeMovie(movie_id,token) {  
         const response = await fetch(`${API_URL}/api/movies/${movie_id}/`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Token ${API_TOKEN}`
+                "Authorization": `Token ${token}`
             }
         });
 
