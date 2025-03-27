@@ -23,29 +23,11 @@ function MovieList({ movieClicked, newMovie, updatedMovie }) {
     }, [updatedMovie]);
 
     useEffect(() => {
-        const fetchMovies = async () => {
-            try {
-                const response = await fetch('http://127.0.0.1:8000/api/movies/', {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Token f0c7456a04cbadc07c1625a8935dc7984fce4804"
-                    }
-                });
-
-                if (!response.ok) {
-                    setError("Error in getting movies");
-                    return;
-                }
-
-                const result = await response.json();
-                setMovies(result.reverse());
-            } catch (error) {
-                setError("Error in getting movies");
-            }
-        };
-
-        fetchMovies();
+        const fetchListMovies=async()=>{
+            const resp=await API.fetchMovies();
+            if(resp) setMovies(resp)
+        }
+       fetchListMovies()
     }, []);
     const removeMovie=(movieToBeRemoved)=>{
         const resp=API.removeMovie(movieToBeRemoved.id)

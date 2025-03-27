@@ -4,6 +4,7 @@ import MovieList from './components/MovieList';
 import MovieDetails from './components/MovieDetails';
 import MovieForm from './components/MovieForm';
 
+
 function App() {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [editedMovie, setEditedMovie] = useState(null);
