@@ -7,37 +7,48 @@ import MovieForm from './components/MovieForm';
 function App() {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [editedMovie, setEditedMovie] = useState(null);
-  const [newMovie,setNewMovie]=useState(null)
+  const [updatedMovie, setUpdatedMovie] = useState(null);
+  const [newMovie, setNewMovie] = useState(null);
 
   const movieClicked = (movie, isEdit) => {
     if (isEdit) {
-      setEditedMovie(movie);  // Show MovieForm
-      setSelectedMovie(null); // Hide MovieDetails
+      setEditedMovie(movie);
+      setSelectedMovie(null);
     } else {
-      setSelectedMovie(movie); // Show MovieDetails
-      setEditedMovie(null);    // Hide MovieForm
+      setSelectedMovie(movie);
+      setEditedMovie(null);
     }
   };
 
-  const createNewMovie=()=>{
-    setSelectedMovie(null)
-    setEditedMovie({title:'',description:''})
-  }
+  const createNewMovie = () => {
+    setSelectedMovie(null);
+    setEditedMovie({ title: '', description: '' });
+  };
 
   return (
     <div className="App">
-      <header className="App-header p-10">
+      <header className="App-header pb-10">
         <div>
           <h1 className='text-3xl font-bold'>Movie Rater</h1>
         </div>
       </header>
       <div className="grid grid-cols-[1fr_2fr]">
         <div>
-          <MovieList movieClicked={movieClicked} newMovie={newMovie}/>
-          <button onClick={()=>createNewMovie()}>Create New Movie</button>
+          <MovieList 
+            movieClicked={movieClicked} 
+            newMovie={newMovie} 
+            updatedMovie={updatedMovie} 
+          />
+          <button onClick={createNewMovie} className="mt-3 ml-3 p-2 bg-blue-500 text-white rounded-lg">
+            Create New Movie
+          </button>
         </div>
         {editedMovie ? (
-          <MovieForm movie={editedMovie} updateMovie={setNewMovie} />
+          <MovieForm 
+            movie={editedMovie} 
+            updateMovie={setUpdatedMovie} 
+            addNewMovie={setNewMovie} 
+          />
         ) : (
           <MovieDetails movie={selectedMovie} updateMovie={setSelectedMovie} />
         )}
